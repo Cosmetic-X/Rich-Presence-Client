@@ -1,0 +1,29 @@
+{
+  "name": "rich-presence-client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cosmetic-X/Rich-Presence-Client.git"
+  },
+  "author": "xxAROX",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cosmetic-X/Rich-Presence-Client/issues"
+  },
+  "homepage": "https://github.com/Cosmetic-X/Rich-Presence-Client#readme",
+  "dependencies": {
+    "appdata-path": "^1.0.0",
+    "discord-rpc": "^4.0.1",
+    "electron": "^17.2.0",
+    "electron-discord-register": "^1.0.0",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "superagent": "^7.1.1",
+    "rpc-protocol": "git+ssh://git@github.com:Cosmetic-X/RPC-Protocol.git"
+  }
+}
