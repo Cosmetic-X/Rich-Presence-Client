@@ -1,10 +1,53 @@
 {
   "name": "rich-presence-client",
   "version": "1.0.0",
-  "description": "",
+  "description": "Wer das liest muss mir einen BlowJob geben",
   "main": "index.js",
+  "build": {
+    "appId": "de.cosmetic-x.client",
+    "productName": "Cosmetic-X Client",
+    "artifactName": "${productName} v${version}.${ext}",
+    "copyright": "Copyright © Jan Sohn.\nAll rights reserved.\nI don't want anyone to use my software without my explicit permission.",
+    "directories": {
+      "output": "out"
+    },
+    "files": [
+      "./package.json",
+      "./resources/*",
+      "./src/**",
+      "./index.js",
+      "./LICENSE",
+      "!**/node_modules/**/{demo,build,deps,doc,docs,samples,benchmark,scss}/**/*",
+      "**/node_modules/**/build/Release/*.node",
+      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!**/node_modules/*.d.ts",
+      "!**/node_modules/.bin",
+      "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
+      "!.editorconfig",
+      "!**/._*",
+      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}",
+      "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}",
+      "!**/{appveyor.yml,.travis.yml,circle.yml}",
+      "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
+    ],
+    "win": {
+      "publisherName": "Jan Sohn",
+      "icon": "./resources/images/logo.png",
+      "target": "portable"
+    },
+    "linux": {
+      "icon": "./resources/images/logo.png",
+      "target": "AppImage"
+    },
+    "mac": {
+      "icon": "./resources/images/logo.png",
+      "target": "dmg"
+    }
+  },
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder -w"
   },
   "repository": {
     "type": "git",
@@ -19,11 +62,14 @@
   "dependencies": {
     "appdata-path": "^1.0.0",
     "discord-rpc": "^4.0.1",
-    "electron": "^17.2.0",
     "electron-discord-register": "^1.0.0",
     "fs": "^0.0.1-security",
     "path": "^0.12.7",
-    "superagent": "^7.1.1",
-    "rpc-protocol": "git+ssh://git@github.com:Cosmetic-X/RPC-Protocol.git"
+    "rpc-protocol": "git+ssh://git@github.com:Cosmetic-X/RPC-Protocol.git",
+    "superagent": "^7.1.1"
+  },
+  "devDependencies": {
+    "electron": "^17.2.0",
+    "electron-builder": "^22.14.13"
   }
 }

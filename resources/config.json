@@ -1,4 +1,10 @@
 {
+	"cosmetic-x": {
+		"rpc": {
+			"host": "cosmetic-x.de",
+			"port": 20058
+		}
+	},
 	"discord": {
 		"application_id": "919154150179209276"
 	}

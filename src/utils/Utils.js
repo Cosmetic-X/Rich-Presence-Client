@@ -7,7 +7,6 @@
  * You are NOT allowed to share this software with others without the explicit permission from Jan Sohn.
  * You MUST acquire this software from official sources.
  * You MUST run this software on your device as compiled file from our releases.
- *
  */
 const {exec} = require("child_process");
 const getAppDataPath = require("appdata-path");
@@ -57,13 +56,40 @@ class Utils {
 			if (!await this.hasMinecraftBedrockEditionInstalled(true)) {
 				return;
 			}
-			if (libraries.fs.existsSync(getAppDataPath + "\\Packages\\Microsoft.XboxApp_8wekyb3d8bbwe\\LocalState\\XboxLiveGamer.xml")) {
-				setConfigValue("Gamertag", JSON.parse(libraries.fs.readFileSync(LOCAL_APPDATA + "\\Packages\\Microsoft.XboxApp_8wekyb3d8bbwe\\LocalState\\XboxLiveGamer.xml").toString()).Gamertag);
-				resolve(getConfig()["Gamertag"]);
+			console.log(libraries.path.join(process.env.LOCALAPPDATA + "\\Packages\\Microsoft.XboxApp_8wekyb3d8bbwe\\LocalState\\XboxLiveGamer.xml"));
+			if (libraries.fs.existsSync(libraries.path.join(process.env.LOCALAPPDATA + "\\Packages\\Microsoft.XboxApp_8wekyb3d8bbwe\\LocalState\\XboxLiveGamer.xml"))) {
+				setConfig("Gamertag", JSON.parse(libraries.fs.readFileSync(libraries.path.join(process.env.LOCALAPPDATA + "\\Packages\\Microsoft.XboxApp_8wekyb3d8bbwe\\LocalState\\XboxLiveGamer.xml")).toString()).Gamertag);
+				resolve(getConfig("Gamertag"));
 			} else {
-				electron.dialog.showErrorBox("Error", "Couldn't penetrate XBOX-Live, please re-login to your XBOX-Live account");
+				electron.dialog.showErrorBox("Error", "Couldn't penetrate XBOX-Live, please re-login to your XBOX-Live account.");
 			}
 		});
+	}
+
+	static makeTray(icon) {
+		if (!cache.tray) {
+			cache.tray = {};
+		}
+		if (!cache.tray.instance) {
+			cache.tray.instance = new electron.Tray(COSMETICX_NATIVE_IMAGE.resize({width: 16}));
+		}
+		cache.tray.contextMenu = [];
+		cache.tray.contextMenu[ cache.tray.contextMenu.length ] = {
+			label: "Delete all files",
+			click: () => {
+				deleteDataFolder();
+			},
+		};
+		cache.tray.contextMenu[ cache.tray.contextMenu.length ] = {
+			label: 'Close',
+			click: () => {
+				electron.app.quit();
+			},
+		};
+		cache.tray.instance.setIgnoreDoubleClickEvents(true);
+		cache.tray.instance.setContextMenu(electron.Menu.buildFromTemplate(cache.tray.contextMenu));
+		cache.tray.instance.setTitle("Cosmetic-X");
+		cache.tray.instance.setToolTip("Cosmetic-X");
 	}
 }
 module.exports = Utils;

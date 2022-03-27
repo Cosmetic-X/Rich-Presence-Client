@@ -7,17 +7,16 @@
  * You are NOT allowed to share this software with others without the explicit permission from Jan Sohn.
  * You MUST acquire this software from official sources.
  * You MUST run this software on your device as compiled file from our releases.
- *
  */
 const DiscordRPC = require("discord-rpc");
 class CosmeticXPresence {
 
 	constructor() {
-		if (!config.get("presence.only_show_network")) {
-			config.set("presence.only_show_network", false);
+		if (!getConfig("presence.only_show_network")) {
+			setConfig("presence.only_show_network", false);
 		}
 		this._client = new DiscordRPC.Client({transport: "ipc"});
-		this._only_show_network = config.get("presence.only_show_network", false);
+		this._only_show_network = getConfig("presence.only_show_network", false);
 	}
 
 	getNetwork() {
