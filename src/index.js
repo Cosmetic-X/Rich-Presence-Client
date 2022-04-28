@@ -8,19 +8,13 @@
  * You MUST acquire this software from official sources.
  * You MUST run this software on your device as compiled file from our releases.
  */
-const HeartbeatPacket = require("rpc-protocol/src/packets/HeartbeatPacket.js");
-const ConnectPacket = require("rpc-protocol/src/packets/ConnectPacket.js");
+const UnknownPacket = require("rpc-protocol/src/packets/UnknownPacket.js");
 
 electron.app.on("ready", async () => {
 	createDataFolder();
 	Utils.makeTray();
-	await Utils.getGamertag().then(gamertag => {
-		cache.gamertag = gamertag;
-		sendPacket(new ConnectPacket(gamertag));
-		setInterval(() => {
-			sendPacket(new HeartbeatPacket());
-		}, 1000 * 2);
-	});
+	CosmeticXPresence.initialize();
+	CosmeticXPresence.login();
 });
 electron.app.on("before-quit", async () => {
 	//sendPacket(new DisconnectPacket());

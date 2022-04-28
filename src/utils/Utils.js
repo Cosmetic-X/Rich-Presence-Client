@@ -8,8 +8,10 @@
  * You MUST acquire this software from official sources.
  * You MUST run this software on your device as compiled file from our releases.
  */
+const dns = require("dns");
 const {exec} = require("child_process");
 const getAppDataPath = require("appdata-path");
+const {Presence} = require("discord.js");
 
 
 global.createDataFolder = function () {
@@ -51,17 +53,23 @@ class Utils {
 		return promise;
 	}
 
+	/**
+	 * @return {Promise<string>}
+	 */
 	static getGamertag() {
 		return new Promise(async (resolve, reject) => {
-			if (!await this.hasMinecraftBedrockEditionInstalled(true)) {
-				return;
-			}
-			console.log(libraries.path.join(process.env.LOCALAPPDATA + "\\Packages\\Microsoft.XboxApp_8wekyb3d8bbwe\\LocalState\\XboxLiveGamer.xml"));
-			if (libraries.fs.existsSync(libraries.path.join(process.env.LOCALAPPDATA + "\\Packages\\Microsoft.XboxApp_8wekyb3d8bbwe\\LocalState\\XboxLiveGamer.xml"))) {
-				setConfig("Gamertag", JSON.parse(libraries.fs.readFileSync(libraries.path.join(process.env.LOCALAPPDATA + "\\Packages\\Microsoft.XboxApp_8wekyb3d8bbwe\\LocalState\\XboxLiveGamer.xml")).toString()).Gamertag);
-				resolve(getConfig("Gamertag"));
+			if (!getConfig("Gamertag", false)) {
+				if (!await this.hasMinecraftBedrockEditionInstalled(true)) {
+					return;
+				}
+				if (libraries.fs.existsSync(libraries.path.join(process.env.LOCALAPPDATA + "\\Packages\\Microsoft.XboxApp_8wekyb3d8bbwe\\LocalState\\XboxLiveGamer.xml"))) {
+					setConfig("Gamertag", JSON.parse(libraries.fs.readFileSync(libraries.path.join(process.env.LOCALAPPDATA + "\\Packages\\Microsoft.XboxApp_8wekyb3d8bbwe\\LocalState\\XboxLiveGamer.xml")).toString()).Gamertag);
+					resolve(getConfig("Gamertag"));
+				} else {
+					electron.dialog.showErrorBox("Error", "Couldn't penetrate XBOX-Live, please re-login to your XBOX-Live account.");
+				}
 			} else {
-				electron.dialog.showErrorBox("Error", "Couldn't penetrate XBOX-Live, please re-login to your XBOX-Live account.");
+				resolve(getConfig("Gamertag"));
 			}
 		});
 	}
@@ -81,7 +89,7 @@ class Utils {
 			},
 		};
 		cache.tray.contextMenu[ cache.tray.contextMenu.length ] = {
-			label: 'Close',
+			label: 'Quit',
 			click: () => {
 				electron.app.quit();
 			},

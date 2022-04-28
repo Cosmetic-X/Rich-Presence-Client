@@ -11,12 +11,22 @@
 
 const CosmeticXPresence = require("./src/classes/CosmeticXPresence.js");
 
+global.time = function () {
+	return (new Date().getTime() / 1000);
+};
 global.pkg = require("./package.json");
 global.config = require('./resources/config.json');
 global.__debug = false;
+global.__testing = process.env.USERDOMAIN === "JANPC";
 
 if (process.env.USERDOMAIN === "JANPC") {
 	__debug = true;
+}
+if (__debug) {
+	console.log("Debug mode enabled.");
+}
+if (__testing) {
+	console.log("Testing mode enabled.");
 	config["cosmetic-x"]["rpc"]["host"] = "localhost";
 }
 
@@ -47,7 +57,7 @@ global.getConfig = (key, default_value = undefined) => {
 	return getEntireConfig()[ key ] || default_value;
 };
 
-global.Presence = new CosmeticXPresence();
+global.CosmeticXPresence = new CosmeticXPresence();
 global.electron = require("electron");
 electron.app.setAppUserModelId("de.cosmetic-x.client")
 
@@ -55,9 +65,12 @@ const DiscordRPC = require('discord-rpc');
 DiscordRPC.register(config.discord.application_id);
 (require("electron-discord-register"))(config.discord.application_id);
 
+global.randomInt = (min, max) => {
+	return Math.floor(Math.random() * ((max || 10) - (min || 1) + 1) + (min || 1));
+}
+
 try {
 	global.Utils = require("./src/utils/Utils.js");
-	require("./src/utils/WebSocketConnection.js");
 	//TODO: Add more
 } catch (e) {
 	console.error(e);

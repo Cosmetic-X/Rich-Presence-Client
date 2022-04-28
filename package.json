@@ -66,10 +66,12 @@
     "fs": "^0.0.1-security",
     "path": "^0.12.7",
     "rpc-protocol": "git+ssh://git@github.com:Cosmetic-X/RPC-Protocol.git",
-    "superagent": "^7.1.1"
+    "superagent": "^7.1.1",
+    "ws": "^8.5.0"
   },
   "devDependencies": {
     "electron": "^17.2.0",
-    "electron-builder": "^22.14.13"
+    "electron-builder": "^22.14.13",
+    "discord.js": "^13.6.0"
   }
 }

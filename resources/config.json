@@ -1,11 +1,12 @@
 {
 	"cosmetic-x": {
 		"rpc": {
-			"host": "cosmetic-x.de",
+			"host": "localhost",
 			"port": 20058
 		}
 	},
 	"discord": {
-		"application_id": "919154150179209276"
+		"application_id": "919154150179209276",
+		"application_secret": "eIU-uxiZmz27hHldOjFKz-AEIVGbzRuU"
 	}
 }
