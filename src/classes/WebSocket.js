@@ -20,7 +20,7 @@ const HeartbeatPacket = require("rpc-protocol/src/packets/HeartbeatPacket.js");
 
 class WebSocket {
 	constructor() {
-		process.on("beforeExit", () => {
+		process.on("exit", () => {
 			if (this._client) {
 				console.log("[WebSocket] Closing..");
 				this._client.destroy();
